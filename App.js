@@ -1,22 +1,29 @@
-import React, {useRef, useMemo, useState, useEffect} from 'react';
-import { FlatList, StyleSheet, Text, View, SafeAreaView, TextInput } from 'react-native';
-import ListItem from './components/ListItem';
-import Chart from './components/Chart';
+import React, { useRef, useMemo, useState, useEffect } from "react";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TextInput,
+} from "react-native";
+import ListItem from "./components/ListItem";
+import Chart from "./components/Chart";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
-import { getMarketData } from './services/cryptoService';
-import SearchBar from './components/SearchBar';
+} from "@gorhom/bottom-sheet";
+import { getMarketData } from "./services/cryptoService";
+import SearchBar from "./components/SearchBar";
 
 const ListHeader = () => (
   <>
     <View style={styles.titleWrapper}>
-        <Text style={styles.largeTitle}>Markets</Text>
-      </View>
+      <Text style={styles.largeTitle}>Markets</Text>
+    </View>
     <View style={styles.divider} />
   </>
-)
+);
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -26,42 +33,43 @@ export default function App() {
   useEffect(() => {
     const fetchMarketData = async () => {
       const marketData = await getMarketData();
-      setData(marketData); // unfiltered 
-      setFilteredData(marketData); // filtered 
-    }
+      setData(marketData); // unfiltered
+      setFilteredData(marketData); // filtered
+    };
 
     fetchMarketData();
-  }, [])
+  }, []);
 
   const bottomSheetModalRef = useRef(null);
-  const snapPoints = useMemo(() => ['50%'], []);
+  const snapPoints = useMemo(() => ["75%"], []);
 
   const openModal = (item) => {
     setSelectedCoinData(item);
     bottomSheetModalRef.current?.present();
-  }
+  };
 
   return (
     <BottomSheetModalProvider>
-    <SafeAreaView style={styles.container}>
-    
-    <SearchBar dataIn={data} searchResult={setFilteredData}/>
+      <SafeAreaView style={styles.container}>
+        <SearchBar dataIn={data} searchResult={setFilteredData} />
 
-      <FlatList
-        keyExtractor={(item) => item.id}
-        data={filteredData}
-        renderItem={({ item }) => (
-          <ListItem
-            name={item.name}
-            symbol={item.symbol}
-            currentPrice={item.current_price}
-            priceChangePercentage7d={item.price_change_percentage_7d_in_currency}
-            logoUrl={item.image}
-            onPress={() => openModal(item)}
-          />
-        )}
-        ListHeaderComponent={<ListHeader />}
-      />
+        <FlatList
+          keyExtractor={(item) => item.id}
+          data={filteredData}
+          renderItem={({ item }) => (
+            <ListItem
+              name={item.name}
+              symbol={item.symbol}
+              currentPrice={item.current_price}
+              priceChangePercentage7d={
+                item.price_change_percentage_7d_in_currency
+              }
+              logoUrl={item.image}
+              onPress={() => openModal(item)}
+            />
+          )}
+          ListHeaderComponent={<ListHeader />}
+        />
       </SafeAreaView>
 
       <BottomSheetModal
@@ -70,25 +78,27 @@ export default function App() {
         snapPoints={snapPoints}
         style={styles.bottomSheet}
       >
-        { selectedCoinData ? (
+        {selectedCoinData ? (
           <Chart
             currentPrice={selectedCoinData.current_price}
             logoUrl={selectedCoinData.image}
             name={selectedCoinData.name}
             symbol={selectedCoinData.symbol}
-            priceChangePercentage7d={selectedCoinData.price_change_percentage_7d_in_currency}
+            priceChangePercentage7d={
+              selectedCoinData.price_change_percentage_7d_in_currency
+            }
             sparkline={selectedCoinData?.sparkline_in_7d.price}
           />
         ) : null}
       </BottomSheetModal>
-      </BottomSheetModalProvider>
+    </BottomSheetModalProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   titleWrapper: {
     marginTop: 20,
@@ -100,7 +110,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#A9ABB1',
+    backgroundColor: "#A9ABB1",
     marginHorizontal: 16,
     marginTop: 16,
   },
@@ -108,18 +118,11 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: -4,
+      height: 12,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  textInputStyle: {
-    height: 50,
-    borderWidth: 1,
-    paddingLeft: 20,
-    margin: 5,
-    borderColor: "blue",
-    backgroundColor: "white",
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+
+    elevation: 24,
   },
 });

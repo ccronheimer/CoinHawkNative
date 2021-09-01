@@ -30,6 +30,10 @@ const SearchBar = ({ dataIn, searchResult }) => {
       placeholder="search here"
       underlineColorAndroid="transparent"
       onChangeText={(text) => searchFilter(text)}
+      autoCorrect={false}
+      autoCapitalize="none"
+      autoCompleteType="off"
+      
     />
   );
 };
