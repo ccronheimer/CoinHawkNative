@@ -11,14 +11,14 @@ const SearchBar = ({ dataIn, searchResult }) => {
         const symbol = item.symbol
           ? item.symbol.toUpperCase()
           : "".toUpperCase();
-        const textData = text.toUpperCase();
+        const textData = text.toUpperCase(); 
         // searching symbol and name
         return symbol.indexOf(textData) > -1 || name.indexOf(textData) > -1;
       });
       searchResult(newData);
       setSearch(text);
     } else {
-      searchResult([]);
+      searchResult(dataIn);
       setSearch(text);
     }
   };
