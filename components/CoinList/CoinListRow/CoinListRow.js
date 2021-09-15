@@ -1,22 +1,22 @@
 import React, { memo } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import CoinRowChart from './CoinRowChart';
 import RowLeft from './RowLeft';
 import RowRight from './RowRight';
 
-
-const ListItem = ({ name, symbol, currentPrice, priceChangePercentage7d, logoUrl, onPress, number }) => {
+const ListItem = ({ name, symbol, currentPrice, priceChangePercentage7d, logoUrl, onPress, number, sparkLine }) => {
   const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
   {/* <Text style={[styles.subtitle, {color: priceChangeColor}]}>{priceChangePercentage7d.toFixed(2)}%</Text> */}
-
+  
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.itemWrapper}>
-        
         {/* Name, Image, %, Ticker */}
         <RowLeft name={name} logoUrl={logoUrl} symbol={symbol} priceChangePercentage7d={priceChangePercentage7d}/>
-        {console.log("Rendering: " + name + number)}
+        {/* {console.log("Rendering: " + name + number + sparkLine)} */}
         {/* Chart View */}
-
+       
+        {/* <CoinListChart {...{ data }} /> */}
         {/* Price, Market Cap */}
         <RowRight currentPrice={currentPrice}/>
 

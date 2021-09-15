@@ -9,17 +9,19 @@ import {
 } from "@gorhom/bottom-sheet";
 import Chart from "../Chart";
 
-const CoinList = ({ filteredData }) => {
+const CoinList = ({ filteredData}) => {
   // To avoid anonymous arrow function on renderItem props.
   const renderItem = ({ item, index }) => (
-    <CoinListRow
-      name={item.name}
+
+    <CoinListRow 
+      name={ item.name}
       symbol={item.symbol}
       currentPrice={item.current_price}
       priceChangePercentage7d={item.price_change_percentage_7d_in_currency}
-      logoUrl={item.image}
+      logoUrl={ item.image}
       onPress={() => openModal(item)}
       number={index}
+      sparkLine={ item.sparkline_in_7d.price}
     />
   );
 
@@ -32,37 +34,46 @@ const CoinList = ({ filteredData }) => {
     bottomSheetModalRef.current?.present();
   };
 
-  return (
-    <BottomSheetModalProvider>
-      <FlatList
-        keyExtractor={(item) => item.id}
-        data={filteredData}
-        windowSize={3}
-        renderItem={renderItem}
-        ListHeaderComponent={<CoinListHeader />}
-      />
+  if(filteredData) {
+    return (
+      <BottomSheetModalProvider>
 
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={snapPoints}
-        style={styles.bottomSheet}
-      >
-        {selectedCoinData ? (
-          <Chart
-            currentPrice={selectedCoinData.current_price}
-            logoUrl={selectedCoinData.image}
-            name={selectedCoinData.name}
-            symbol={selectedCoinData.symbol}
-            priceChangePercentage7d={
-              selectedCoinData.price_change_percentage_7d_in_currency
-            }
-            sparkline={selectedCoinData?.sparkline_in_7d.price}
-          />
-        ) : null}
-      </BottomSheetModal>
-    </BottomSheetModalProvider>
-  );
+        <FlatList
+          keyExtractor={(item) => item.id}
+          data={filteredData}
+          windowSize={20}
+          renderItem={renderItem}
+          ListHeaderComponent={<CoinListHeader />}
+        />
+  
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          index={0}
+          snapPoints={snapPoints}
+          style={styles.bottomSheet}
+        >
+          {selectedCoinData ? (
+            <Chart
+              currentPrice={selectedCoinData.current_price}
+              logoUrl={selectedCoinData.image}
+              name={selectedCoinData.name}
+              symbol={selectedCoinData.symbol}
+              priceChangePercentage7d={
+                selectedCoinData.price_change_percentage_7d_in_currency
+              }
+              sparkline={selectedCoinData?.sparkline_in_7d.price}
+            />
+          ) : null}
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
+    );
+  } else { 
+
+    return (
+      <Text>Loading..</Text>
+    )
+  }
+  
 };
 
 export default CoinList;

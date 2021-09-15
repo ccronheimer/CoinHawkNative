@@ -3,10 +3,10 @@ import { StyleSheet, View } from 'react-native';
 import { getMarketData } from "./services/cryptoService";
 import SearchBar from "./components/SearchBar";
 import CoinList from "./components/CoinList/CoinList";
-
+import CoinListTest from "./components/CoinList/CoinListTest"
 export default function App() {
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+  const [data, setData] = useState(null);
+  const [filteredData, setFilteredData] = useState(null);
 
   useEffect(() => {
     const fetchMarketData = async () => {
@@ -18,10 +18,12 @@ export default function App() {
     fetchMarketData();
   }, []);
 
+  
   return (
     <View style={styles.container}>
-      <SearchBar dataIn={data} searchResult={setFilteredData} />
-      <CoinList filteredData={filteredData} />
+       <SearchBar dataIn={data} searchResult={setFilteredData} />
+      {/* <CoinList filteredData={filteredData} /> */}
+      <CoinListTest data={filteredData}/>
     </View>
   );
 }
