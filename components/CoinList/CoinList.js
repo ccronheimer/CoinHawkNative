@@ -7,9 +7,10 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
+
 import Chart from "../Chart";
 
-const CoinList = ({ filteredData}) => {
+const CoinList = ({ data }) => {
   // To avoid anonymous arrow function on renderItem props.
   const renderItem = ({ item, index }) => (
 
@@ -34,13 +35,12 @@ const CoinList = ({ filteredData}) => {
     bottomSheetModalRef.current?.present();
   };
 
-  if(filteredData) {
+
     return (
       <BottomSheetModalProvider>
-
         <FlatList
           keyExtractor={(item) => item.id}
-          data={filteredData}
+          data={data}
           windowSize={20}
           renderItem={renderItem}
           ListHeaderComponent={<CoinListHeader />}
@@ -67,13 +67,6 @@ const CoinList = ({ filteredData}) => {
         </BottomSheetModal>
       </BottomSheetModalProvider>
     );
-  } else { 
-
-    return (
-      <Text>Loading..</Text>
-    )
-  }
-  
 };
 
 export default CoinList;

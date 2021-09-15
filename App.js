@@ -22,7 +22,7 @@ export default function App() {
   return (
     <View style={styles.container}>
        <SearchBar dataIn={data} searchResult={setFilteredData} />
-      {/* <CoinList filteredData={filteredData} /> */}
+       {/* <CoinList filteredData={filteredData} /> */}
       <CoinListTest data={filteredData}/>
     </View>
   );
