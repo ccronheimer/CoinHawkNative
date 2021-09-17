@@ -4,9 +4,10 @@ import CoinRowChart from './CoinRowChart';
 import RowLeft from './RowLeft';
 import RowRight from './RowRight';
 
-const ListItem = ({ name, symbol, currentPrice, priceChangePercentage7d, logoUrl, onPress, number, sparkLine }) => {
+const ListItem = ({ name, symbol, currentPrice, priceChangePercentage7d, logoUrl, onPress, sparkLine }) => {
   const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
   {/* <Text style={[styles.subtitle, {color: priceChangeColor}]}>{priceChangePercentage7d.toFixed(2)}%</Text> */}
+  
   
   return (
     <TouchableOpacity onPress={onPress}>
@@ -15,8 +16,8 @@ const ListItem = ({ name, symbol, currentPrice, priceChangePercentage7d, logoUrl
         <RowLeft name={name} logoUrl={logoUrl} symbol={symbol} priceChangePercentage7d={priceChangePercentage7d}/>
         {/* {console.log("Rendering: " + name + number + sparkLine)} */}
         {/* Chart View */}
-       
-        {/* <CoinListChart {...{ data }} /> */}
+      
+        <CoinRowChart sparkLine={sparkLine}/>
         {/* Price, Market Cap */}
         <RowRight currentPrice={currentPrice}/>
 

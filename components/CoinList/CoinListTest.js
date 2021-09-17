@@ -12,10 +12,6 @@ import {
 
 import Chart from "../Chart";
 
-
-
-  
-
 const CoinListTest = ({ data }) => {
     
   // To avoid anonymous arrow function on renderItem props.
@@ -29,7 +25,8 @@ const renderItem = ({ item, index }) => (
     logoUrl={ item.image}
     onPress={() => openModal(item)}
     number={index}
-    sparkLine={ item.sparkline_in_7d.price}
+    sparkLine={item.sparkline_in_7d.price}
+
   />
 
 );
@@ -53,12 +50,14 @@ const renderItem = ({ item, index }) => (
       console.log(data);
     return (
       <BottomSheetModalProvider>
- <FlatList
-        keyExtractor={(item) => item.id}
-        data={data}
-        windowSize={3}
-        renderItem={renderItem}
-      />
+<FlatList
+          keyExtractor={(item) => item.id}
+          data={data}
+          windowSize={20}
+          renderItem={renderItem}
+          ListHeaderComponent={<CoinListHeader />}
+        />
+  
       <BottomSheetModal
           ref={bottomSheetModalRef}
           index={0}
