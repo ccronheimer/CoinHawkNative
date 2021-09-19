@@ -18,6 +18,7 @@ const CoinListTest = ({ data }) => {
 const renderItem = ({ item, index }) => (
   
   <CoinListRow 
+    mrank={item.market_cap_rank}
     name={ item.name }
     symbol={item.symbol}
     currentPrice={item.current_price}

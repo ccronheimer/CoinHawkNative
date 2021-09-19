@@ -4,27 +4,33 @@ import CoinRowChart from './CoinRowChart';
 import RowLeft from './RowLeft';
 import RowRight from './RowRight';
 
-const ListItem = ({ name, symbol, currentPrice, priceChangePercentage7d, logoUrl, onPress, sparkLine }) => {
+const ListItem = ({ mrank, name, symbol, currentPrice, priceChangePercentage7d, logoUrl, onPress, sparkLine }) => {
   const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
   {/* <Text style={[styles.subtitle, {color: priceChangeColor}]}>{priceChangePercentage7d.toFixed(2)}%</Text> */}
   
-  
+  // make this fixed rows 
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.itemWrapper}>
-        {/* Name, Image, %, Ticker */}
-        <RowLeft name={name} logoUrl={logoUrl} symbol={symbol} priceChangePercentage7d={priceChangePercentage7d}/>
-        {/* {console.log("Rendering: " + name + number + sparkLine)} */}
-        {/* Chart View */}
+
+       {/* Name, Image, %, Ticker */}
+       <View style={styles.leftWrapper}>
+       <RowLeft mrank={mrank} name={name} logoUrl={logoUrl} symbol={symbol} priceChangePercentage7d={priceChangePercentage7d}/>
+       </View>
       
-        <CoinRowChart sparkLine={sparkLine}/>
+        {/* Chart View */}
+        <View style={styles.middleWrapper}> 
+        <CoinRowChart sparkLine={sparkLine} width={100} height={50}/>
+        </View>
+
         {/* Price, Market Cap */}
+        <View style={styles.rightWrapper}>
         <RowRight currentPrice={currentPrice}/>
+        </View>
 
       </View>
     </TouchableOpacity>
-  )
-  
+  )  
 }
 
 // List optimization memo avoid re render
@@ -40,16 +46,14 @@ const areEqual = (prevProps, nextProps) => {
 
 const styles = StyleSheet.create({
   itemWrapper: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 14,
     marginTop: 24,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: 'center',
+    height: 50,
   },
-  leftWrapper: {
-    flexDirection: "row",
-    alignItems: 'center',
-  },
+
   image: {
     height: 48,
     width: 48,
@@ -65,9 +69,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#A9ABB1",
   },
-  rightWrapper: {
-    alignItems: 'flex-end',
+
+  leftWrapper: {
+    width: 150,
+    flexDirection: "row",
+    alignItems: 'center',
   },
+
+  middleWrapper: {
+    width: 100,
+  },
+  rightWrapper: {
+    width: 100,
+  },
+  
+
 });
 
 export default memo(ListItem, areEqual);
