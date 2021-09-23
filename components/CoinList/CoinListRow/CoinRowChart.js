@@ -43,7 +43,7 @@ const verticalPadding = 5;
 const cursorRadius = 10;
 const labelWidth = 100;
 
-const CoinRowChart = ({ sparkLine, width, height }) => {
+const CoinRowChart = ({ sparkLine, width, height, priceChangeColor }) => {
   const d3 = {
     shape,
   };
@@ -101,16 +101,15 @@ const CoinRowChart = ({ sparkLine, width, height }) => {
           <Svg {...{ width, height }}>
             <Defs>
               <LinearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="gradient">
-                <Stop stopColor="#CDE3F8" offset="0%" />
-                <Stop stopColor="#eef6fd" offset="80%" />
-                <Stop stopColor="#FEFFFF" offset="100%" />
+                <Stop stopColor={priceChangeColor} offset="0" stopOpacity="0.3" />
+                <Stop stopColor="#FFFFFF" offset="1" stopOpacity="0.1"/>
               </LinearGradient>
             </Defs>
             <Path
               d={line}
               fill="transparent"
-              stroke="#367be2"
-              strokeWidth={5}
+              stroke={priceChangeColor}
+              strokeWidth={2}
             />
             <Path
               d={`${line} L ${width} ${height} L 0 ${height}`}

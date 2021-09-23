@@ -7,7 +7,7 @@ const CoinListHeader = () => {
     <View style={styles.titleWrapper}>
       <Text style={styles.largeTitle}>Markets</Text>
     </View>
-    <View style={styles.divider} />
+    {/* <View style={styles.divider} /> */}
   </>
     )
 }

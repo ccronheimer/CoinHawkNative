@@ -5,11 +5,12 @@ import RowLeft from './RowLeft';
 import RowRight from './RowRight';
 
 const ListItem = ({ mrank, name, symbol, currentPrice, priceChangePercentage7d, logoUrl, onPress, sparkLine }) => {
-  const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
+  const priceChangeColor = priceChangePercentage7d > 0 ? '#00e38d' : 'red';
   {/* <Text style={[styles.subtitle, {color: priceChangeColor}]}>{priceChangePercentage7d.toFixed(2)}%</Text> */}
   
   // make this fixed rows 
   return (
+    <>
     <TouchableOpacity onPress={onPress}>
       <View style={styles.itemWrapper}>
 
@@ -17,10 +18,10 @@ const ListItem = ({ mrank, name, symbol, currentPrice, priceChangePercentage7d, 
        <View style={styles.leftWrapper}>
        <RowLeft mrank={mrank} name={name} logoUrl={logoUrl} symbol={symbol} priceChangePercentage7d={priceChangePercentage7d}/>
        </View>
-      
+        
         {/* Chart View */}
         <View style={styles.middleWrapper}> 
-        <CoinRowChart sparkLine={sparkLine} width={100} height={50}/>
+        <CoinRowChart sparkLine={sparkLine} width={70} height={34} priceChangeColor={priceChangeColor}/>
         </View>
 
         {/* Price, Market Cap */}
@@ -29,7 +30,10 @@ const ListItem = ({ mrank, name, symbol, currentPrice, priceChangePercentage7d, 
         </View>
 
       </View>
+      
     </TouchableOpacity>
+    <View style={styles.divider} />
+    </>
   )  
 }
 
@@ -54,33 +58,25 @@ const styles = StyleSheet.create({
     height: 50,
   },
 
-  image: {
-    height: 48,
-    width: 48,
-  },
   titlesWrapper: {
     marginLeft: 8,
   },
-  title: {
-    fontSize: 18,
+  divider: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: "#e6e6e6",
+    marginHorizontal: 16,
+    marginTop: 16,
   },
-  subtitle: {
-    marginTop: 4,
-    fontSize: 14,
-    color: "#A9ABB1",
-  },
-
   leftWrapper: {
-    width: 150,
     flexDirection: "row",
-    alignItems: 'center',
+    width: 180,
   },
 
   middleWrapper: {
-    width: 100,
   },
   rightWrapper: {
     width: 100,
+    
   },
   
 
